@@ -1,0 +1,3031 @@
+{
+  "assessment_metadata": {
+    "name": "CyberPath Risk Score - Comprehensive Cyber Insurance Risk Assessment",
+    "version": "1.0.0",
+    "last_updated": "2026-04-25",
+    "total_questions": 100,
+    "estimated_completion_time_minutes": 12,
+    "author": "CyberPath Belfast",
+    "data_source": "Based on 100+ Belfast SME security assessments (2022-2024)"
+  },
+  
+  "scoring_model": {
+    "total_possible_score": 100,
+    "scale": "0-100 (higher score = lower risk)",
+    "methodology": "Weighted actuarial model based on insurance claim data",
+    "category_weights": {
+      "context": 0.0,
+      "ransomware": 0.40,
+      "data_protection": 0.30,
+      "network_security": 0.15,
+      "incident_response": 0.10,
+      "compliance": 0.05
+    },
+    "risk_bands": {
+      "low_risk": {
+        "score_range": [85, 100],
+        "label": "LOW RISK",
+        "color": "#10b981",
+        "premium_adjustment": "-25% to -30%"
+      },
+      "medium_risk": {
+        "score_range": [70, 84],
+        "label": "MEDIUM RISK",
+        "color": "#f59e0b",
+        "premium_adjustment": "-10% to -15%"
+      },
+      "medium_high_risk": {
+        "score_range": [50, 69],
+        "label": "MEDIUM-HIGH RISK",
+        "color": "#ef4444",
+        "premium_adjustment": "0% to +10%"
+      },
+      "high_risk": {
+        "score_range": [0, 49],
+        "label": "HIGH RISK",
+        "color": "#dc2626",
+        "premium_adjustment": "+20% to +50%"
+      }
+    }
+  },
+
+  "questions": [
+    {
+      "id": "CTX_001",
+      "section": "context",
+      "question_number": 1,
+      "text": "What is your primary industry sector?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "risk_impact": "multiplier",
+      "options": [
+        {
+          "value": "saas",
+          "label": "SaaS / Software",
+          "points": 0,
+          "risk_multiplier": 1.2,
+          "breach_likelihood": 0.28,
+          "avg_breach_cost": 185000
+        },
+        {
+          "value": "fintech",
+          "label": "Fintech / Financial Services",
+          "points": 0,
+          "risk_multiplier": 1.5,
+          "breach_likelihood": 0.34,
+          "avg_breach_cost": 320000
+        },
+        {
+          "value": "ecommerce",
+          "label": "E-commerce / Retail",
+          "points": 0,
+          "risk_multiplier": 1.3,
+          "breach_likelihood": 0.31,
+          "avg_breach_cost": 210000
+        },
+        {
+          "value": "healthcare",
+          "label": "Healthcare / MedTech",
+          "points": 0,
+          "risk_multiplier": 1.6,
+          "breach_likelihood": 0.41,
+          "avg_breach_cost": 425000
+        },
+        {
+          "value": "professional_services",
+          "label": "Professional Services",
+          "points": 0,
+          "risk_multiplier": 1.0,
+          "breach_likelihood": 0.22,
+          "avg_breach_cost": 145000
+        },
+        {
+          "value": "manufacturing",
+          "label": "Manufacturing / Industrial",
+          "points": 0,
+          "risk_multiplier": 1.1,
+          "breach_likelihood": 0.19,
+          "avg_breach_cost": 168000
+        },
+        {
+          "value": "education",
+          "label": "Education",
+          "points": 0,
+          "risk_multiplier": 1.2,
+          "breach_likelihood": 0.26,
+          "avg_breach_cost": 152000
+        },
+        {
+          "value": "other",
+          "label": "Other",
+          "points": 0,
+          "risk_multiplier": 1.0,
+          "breach_likelihood": 0.25,
+          "avg_breach_cost": 150000
+        }
+      ]
+    },
+    {
+      "id": "CTX_002",
+      "section": "context",
+      "question_number": 2,
+      "text": "How many employees does your company have?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "risk_impact": "attack_surface",
+      "options": [
+        {
+          "value": "1-10",
+          "label": "1-10 employees",
+          "points": 0,
+          "risk_multiplier": 0.8,
+          "attack_surface": 20
+        },
+        {
+          "value": "11-50",
+          "label": "11-50 employees",
+          "points": 0,
+          "risk_multiplier": 1.0,
+          "attack_surface": 40
+        },
+        {
+          "value": "51-200",
+          "label": "51-200 employees",
+          "points": 0,
+          "risk_multiplier": 1.2,
+          "attack_surface": 70
+        },
+        {
+          "value": "201-500",
+          "label": "201-500 employees",
+          "points": 0,
+          "risk_multiplier": 1.3,
+          "attack_surface": 85
+        },
+        {
+          "value": "500+",
+          "label": "500+ employees",
+          "points": 0,
+          "risk_multiplier": 1.5,
+          "attack_surface": 100
+        }
+      ]
+    },
+    {
+      "id": "CTX_003",
+      "section": "context",
+      "question_number": 3,
+      "text": "What is your approximate annual revenue?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "risk_impact": "loss_magnitude",
+      "options": [
+        {
+          "value": "under_1m",
+          "label": "Under £1M",
+          "points": 0,
+          "revenue_midpoint": 500000,
+          "daily_loss": 1400
+        },
+        {
+          "value": "1m_5m",
+          "label": "£1M - £5M",
+          "points": 0,
+          "revenue_midpoint": 3000000,
+          "daily_loss": 8200
+        },
+        {
+          "value": "5m_20m",
+          "label": "£5M - £20M",
+          "points": 0,
+          "revenue_midpoint": 12500000,
+          "daily_loss": 34200
+        },
+        {
+          "value": "20m_plus",
+          "label": "£20M+",
+          "points": 0,
+          "revenue_midpoint": 35000000,
+          "daily_loss": 95900
+        }
+      ]
+    },
+    {
+      "id": "CTX_004",
+      "section": "context",
+      "question_number": 4,
+      "text": "What types of sensitive data do you handle? (Select all that apply)",
+      "type": "multi_select",
+      "required": true,
+      "weight": 0,
+      "risk_impact": "regulatory_exposure",
+      "options": [
+        {
+          "value": "none",
+          "label": "No sensitive data",
+          "points": 0,
+          "regulatory_exposure": 0
+        },
+        {
+          "value": "basic_pii",
+          "label": "Basic PII (names, emails, addresses)",
+          "points": 0,
+          "regulatory_exposure": 5000
+        },
+        {
+          "value": "payment_data",
+          "label": "Payment card data",
+          "points": 0,
+          "regulatory_exposure": 50000
+        },
+        {
+          "value": "health_data",
+          "label": "Health/medical records",
+          "points": 0,
+          "regulatory_exposure": 200000
+        },
+        {
+          "value": "financial_records",
+          "label": "Financial/banking data",
+          "points": 0,
+          "regulatory_exposure": 75000
+        }
+      ]
+    },
+    {
+      "id": "CTX_005",
+      "section": "context",
+      "question_number": 5,
+      "text": "What percentage of your workforce is remote?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "options": [
+        {
+          "value": "0-25",
+          "label": "0-25% remote",
+          "points": 0,
+          "remote_multiplier": 1.0
+        },
+        {
+          "value": "26-50",
+          "label": "26-50% remote",
+          "points": 0,
+          "remote_multiplier": 1.15
+        },
+        {
+          "value": "51-75",
+          "label": "51-75% remote",
+          "points": 0,
+          "remote_multiplier": 1.25
+        },
+        {
+          "value": "76-100",
+          "label": "76-100% remote",
+          "points": 0,
+          "remote_multiplier": 1.4
+        }
+      ]
+    },
+    {
+      "id": "CTX_006",
+      "section": "context",
+      "question_number": 6,
+      "text": "Current annual cyber insurance premium (optional - helps calculate savings)",
+      "type": "number",
+      "required": false,
+      "weight": 0,
+      "min": 0,
+      "max": 1000000,
+      "placeholder": "12000"
+    },
+    {
+      "id": "CTX_007",
+      "section": "context",
+      "question_number": 7,
+      "text": "Do you have a dedicated IT/Security team?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "options": [
+        {
+          "value": "no_it",
+          "label": "No dedicated IT staff",
+          "points": 0,
+          "capability": 0
+        },
+        {
+          "value": "outsourced",
+          "label": "Outsourced IT support",
+          "points": 0,
+          "capability": 30
+        },
+        {
+          "value": "it_no_security",
+          "label": "IT team but no security specialist",
+          "points": 0,
+          "capability": 50
+        },
+        {
+          "value": "security_person",
+          "label": "Dedicated security person",
+          "points": 0,
+          "capability": 80
+        },
+        {
+          "value": "security_team",
+          "label": "Full security team",
+          "points": 0,
+          "capability": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_001",
+      "section": "ransomware",
+      "question_number": 8,
+      "text": "Do you perform regular backups of critical systems?",
+      "type": "single_select",
+      "required": true,
+      "weight": 100,
+      "severity": "critical",
+      "options": [
+        {
+          "value": "no",
+          "label": "No regular backups",
+          "points": 0,
+          "breach_data": "100% of ransomware victims without backups paid ransom or lost data"
+        },
+        {
+          "value": "ad_hoc",
+          "label": "Ad-hoc manual backups",
+          "points": 20,
+          "breach_data": "72% recovery failure rate"
+        },
+        {
+          "value": "some_systems",
+          "label": "Scheduled backups for some systems",
+          "points": 50
+        },
+        {
+          "value": "comprehensive",
+          "label": "Comprehensive automated backups",
+          "points": 80
+        },
+        {
+          "value": "3_2_1",
+          "label": "3-2-1 backup strategy",
+          "points": 100,
+          "breach_data": "97% recovery success rate"
+        }
+      ],
+      "conditional_next": {
+        "if_not": ["no"],
+        "show": ["RAN_002", "RAN_003", "RAN_004", "RAN_005"]
+      }
+    },
+    {
+      "id": "RAN_002",
+      "section": "ransomware",
+      "question_number": 9,
+      "text": "When did you last TEST restoring from backup?",
+      "type": "single_select",
+      "required": true,
+      "weight": 150,
+      "severity": "critical",
+      "conditional_on": {
+        "RAN_001": ["ad_hoc", "some_systems", "comprehensive", "3_2_1"]
+      },
+      "options": [
+        {
+          "value": "never",
+          "label": "Never tested",
+          "points": 0,
+          "breach_data": "82% failed to restore (CyRAACS Belfast data)"
+        },
+        {
+          "value": "over_1_year",
+          "label": "Over 1 year ago",
+          "points": 30
+        },
+        {
+          "value": "6_12_months",
+          "label": "6-12 months ago",
+          "points": 60
+        },
+        {
+          "value": "quarterly",
+          "label": "Quarterly",
+          "points": 85
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly or more",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_003",
+      "section": "ransomware",
+      "question_number": 10,
+      "text": "Backup frequency for critical systems?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "conditional_on": {
+        "RAN_001": ["ad_hoc", "some_systems", "comprehensive", "3_2_1"]
+      },
+      "options": [
+        {
+          "value": "weekly",
+          "label": "Weekly",
+          "points": 40
+        },
+        {
+          "value": "daily",
+          "label": "Daily",
+          "points": 70
+        },
+        {
+          "value": "hourly",
+          "label": "Hourly",
+          "points": 90
+        },
+        {
+          "value": "continuous",
+          "label": "Continuous replication",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_004",
+      "section": "ransomware",
+      "question_number": 11,
+      "text": "Where are backups stored?",
+      "type": "single_select",
+      "required": true,
+      "weight": 60,
+      "conditional_on": {
+        "RAN_001": ["ad_hoc", "some_systems", "comprehensive", "3_2_1"]
+      },
+      "options": [
+        {
+          "value": "same_network",
+          "label": "Same network as production",
+          "points": 0,
+          "breach_data": "61% also encrypted by ransomware"
+        },
+        {
+          "value": "different_location",
+          "label": "Different location, network-connected",
+          "points": 40
+        },
+        {
+          "value": "air_gapped",
+          "label": "Air-gapped/offline",
+          "points": 80
+        },
+        {
+          "value": "cloud_immutable",
+          "label": "Cloud with immutable storage",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_005",
+      "section": "ransomware",
+      "question_number": 12,
+      "text": "Are backups encrypted?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "conditional_on": {
+        "RAN_001": ["ad_hoc", "some_systems", "comprehensive", "3_2_1"]
+      },
+      "options": [
+        {
+          "value": "no",
+          "label": "No encryption",
+          "points": 0
+        },
+        {
+          "value": "some",
+          "label": "Some encrypted",
+          "points": 50
+        },
+        {
+          "value": "all",
+          "label": "All encrypted",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_006",
+      "section": "ransomware",
+      "question_number": 13,
+      "text": "Do you have defined RTO/RPO?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No RTO/RPO",
+          "points": 0
+        },
+        {
+          "value": "defined_not_tested",
+          "label": "Defined but not tested",
+          "points": 40
+        },
+        {
+          "value": "tested_annually",
+          "label": "Tested annually",
+          "points": 75
+        },
+        {
+          "value": "tested_quarterly",
+          "label": "Tested quarterly",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_007",
+      "section": "ransomware",
+      "question_number": 14,
+      "text": "What endpoint protection is deployed?",
+      "type": "single_select",
+      "required": true,
+      "weight": 80,
+      "options": [
+        {
+          "value": "none",
+          "label": "No endpoint protection",
+          "points": 0
+        },
+        {
+          "value": "basic_av",
+          "label": "Basic antivirus",
+          "points": 30
+        },
+        {
+          "value": "next_gen_av",
+          "label": "Next-gen AV",
+          "points": 60
+        },
+        {
+          "value": "edr",
+          "label": "EDR (Endpoint Detection Response)",
+          "points": 85
+        },
+        {
+          "value": "edr_mdr",
+          "label": "EDR + 24/7 MDR",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_008",
+      "section": "ransomware",
+      "question_number": 15,
+      "text": "Email filtering/anti-phishing?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "none",
+          "label": "No advanced filtering",
+          "points": 0,
+          "breach_data": "91% of ransomware via phishing"
+        },
+        {
+          "value": "basic",
+          "label": "Basic spam filter",
+          "points": 30
+        },
+        {
+          "value": "advanced",
+          "label": "Advanced anti-phishing",
+          "points": 80
+        },
+        {
+          "value": "advanced_training",
+          "label": "Advanced + simulated phishing",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_009",
+      "section": "ransomware",
+      "question_number": 16,
+      "text": "How do you manage security patches?",
+      "type": "single_select",
+      "required": true,
+      "weight": 60,
+      "options": [
+        {
+          "value": "no_process",
+          "label": "No formal process",
+          "points": 0
+        },
+        {
+          "value": "manual_reactive",
+          "label": "Manual, reactive",
+          "points": 25
+        },
+        {
+          "value": "manual_monthly",
+          "label": "Scheduled monthly",
+          "points": 50
+        },
+        {
+          "value": "automated_monthly",
+          "label": "Automated monthly",
+          "points": 75
+        },
+        {
+          "value": "automated_weekly",
+          "label": "Automated weekly critical patches",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_010",
+      "section": "ransomware",
+      "question_number": 17,
+      "text": "Application whitelisting/allow-listing?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No app control",
+          "points": 0
+        },
+        {
+          "value": "servers",
+          "label": "Servers only",
+          "points": 40
+        },
+        {
+          "value": "critical",
+          "label": "Critical systems",
+          "points": 70
+        },
+        {
+          "value": "comprehensive",
+          "label": "All endpoints",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_011",
+      "section": "ransomware",
+      "question_number": 18,
+      "text": "Do users have local admin rights?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "yes_all",
+          "label": "Yes, all users",
+          "points": 0,
+          "breach_data": "3x faster spread with admin rights"
+        },
+        {
+          "value": "some",
+          "label": "Some users",
+          "points": 40
+        },
+        {
+          "value": "admins_only",
+          "label": "IT admins only",
+          "points": 80
+        },
+        {
+          "value": "pam_jit",
+          "label": "Just-in-time PAM",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_012",
+      "section": "ransomware",
+      "question_number": 19,
+      "text": "Office macro blocking?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No blocking",
+          "points": 0
+        },
+        {
+          "value": "warn",
+          "label": "Warn users",
+          "points": 30
+        },
+        {
+          "value": "block_internet",
+          "label": "Block from internet",
+          "points": 80
+        },
+        {
+          "value": "signed_only",
+          "label": "Only signed macros",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "RAN_013",
+      "section": "ransomware",
+      "question_number": 20,
+      "text": "Network segmentation?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "flat",
+          "label": "Flat network",
+          "points": 0
+        },
+        {
+          "value": "basic_vlan",
+          "label": "Basic VLANs",
+          "points": 35
+        },
+        {
+          "value": "multi_tier",
+          "label": "Multi-tier segmentation",
+          "points": 70
+        },
+        {
+          "value": "zero_trust",
+          "label": "Zero-trust micro-segmentation",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_001",
+      "section": "data_protection",
+      "question_number": 21,
+      "text": "Multi-Factor Authentication (MFA) scope?",
+      "type": "single_select",
+      "required": true,
+      "weight": 120,
+      "severity": "critical",
+      "options": [
+        {
+          "value": "none",
+          "label": "No MFA",
+          "points": 0,
+          "breach_data": "68% of breaches involve no MFA"
+        },
+        {
+          "value": "admins",
+          "label": "Admins only",
+          "points": 30
+        },
+        {
+          "value": "employees",
+          "label": "All employees",
+          "points": 70
+        },
+        {
+          "value": "everyone",
+          "label": "Everyone including contractors",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_002",
+      "section": "data_protection",
+      "question_number": 22,
+      "text": "Primary MFA method?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "sms",
+          "label": "SMS codes",
+          "points": 30
+        },
+        {
+          "value": "totp",
+          "label": "Authenticator app",
+          "points": 70
+        },
+        {
+          "value": "hardware",
+          "label": "Hardware tokens",
+          "points": 90
+        },
+        {
+          "value": "passwordless",
+          "label": "Passwordless (FIDO2)",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_003",
+      "section": "data_protection",
+      "question_number": 23,
+      "text": "Password policy minimum length?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no_policy",
+          "label": "No enforced policy",
+          "points": 0
+        },
+        {
+          "value": "8_chars",
+          "label": "8 characters",
+          "points": 30
+        },
+        {
+          "value": "12_chars",
+          "label": "12 characters",
+          "points": 70
+        },
+        {
+          "value": "16_chars",
+          "label": "16+ characters",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_004",
+      "section": "data_protection",
+      "question_number": 24,
+      "text": "Access review frequency?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "never",
+          "label": "Never/only on departure",
+          "points": 0,
+          "breach_data": "52% had active ex-employee accounts"
+        },
+        {
+          "value": "annually",
+          "label": "Annually",
+          "points": 40
+        },
+        {
+          "value": "quarterly",
+          "label": "Quarterly",
+          "points": 75
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly or automated",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_005",
+      "section": "data_protection",
+      "question_number": 25,
+      "text": "Data encryption at rest?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No encryption",
+          "points": 0
+        },
+        {
+          "value": "databases",
+          "label": "Databases only",
+          "points": 40
+        },
+        {
+          "value": "most",
+          "label": "Most sensitive data",
+          "points": 70
+        },
+        {
+          "value": "all",
+          "label": "All data encrypted",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_006",
+      "section": "data_protection",
+      "question_number": 26,
+      "text": "Data classification policy?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No classification",
+          "points": 0
+        },
+        {
+          "value": "defined",
+          "label": "Defined but not enforced",
+          "points": 40
+        },
+        {
+          "value": "enforced",
+          "label": "Actively enforced",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_007",
+      "section": "data_protection",
+      "question_number": 27,
+      "text": "Data Loss Prevention (DLP)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No DLP",
+          "points": 0
+        },
+        {
+          "value": "email",
+          "label": "Email DLP only",
+          "points": 50
+        },
+        {
+          "value": "comprehensive",
+          "label": "Email + endpoint DLP",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_008",
+      "section": "data_protection",
+      "question_number": 28,
+      "text": "Privileged Access Management (PAM)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "no",
+          "label": "No PAM",
+          "points": 0
+        },
+        {
+          "value": "password_vault",
+          "label": "Password vault",
+          "points": 50
+        },
+        {
+          "value": "full_pam",
+          "label": "Full PAM with session recording",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_009",
+      "section": "data_protection",
+      "question_number": 29,
+      "text": "Encryption in transit (TLS/SSL)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No encryption",
+          "points": 0
+        },
+        {
+          "value": "some",
+          "label": "Some connections",
+          "points": 40
+        },
+        {
+          "value": "all_tls12",
+          "label": "All connections (TLS 1.2+)",
+          "points": 80
+        },
+        {
+          "value": "tls13",
+          "label": "TLS 1.3 enforced",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_010",
+      "section": "data_protection",
+      "question_number": 30,
+      "text": "Secure credential storage?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "plaintext",
+          "label": "Plaintext or weak hashing",
+          "points": 0
+        },
+        {
+          "value": "hashed",
+          "label": "Hashed passwords",
+          "points": 60
+        },
+        {
+          "value": "salted_hashed",
+          "label": "Salted + hashed (bcrypt/Argon2)",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_001",
+      "section": "network_security",
+      "question_number": 31,
+      "text": "Firewall/perimeter security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "none",
+          "label": "No firewall",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic firewall",
+          "points": 40
+        },
+        {
+          "value": "ngfw",
+          "label": "Next-gen firewall",
+          "points": 75
+        },
+        {
+          "value": "ngfw_waf",
+          "label": "NGFW + WAF",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_002",
+      "section": "network_security",
+      "question_number": 32,
+      "text": "Vulnerability scanning frequency?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "never",
+          "label": "Never",
+          "points": 0
+        },
+        {
+          "value": "annually",
+          "label": "Annually",
+          "points": 25
+        },
+        {
+          "value": "quarterly",
+          "label": "Quarterly",
+          "points": 60
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly",
+          "points": 85
+        },
+        {
+          "value": "continuous",
+          "label": "Continuous",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_003",
+      "section": "network_security",
+      "question_number": 33,
+      "text": "Penetration testing frequency?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "never",
+          "label": "Never",
+          "points": 0
+        },
+        {
+          "value": "over_2_years",
+          "label": "Over 2 years ago",
+          "points": 20
+        },
+        {
+          "value": "annually",
+          "label": "Annually",
+          "points": 80
+        },
+        {
+          "value": "biannually",
+          "label": "Twice per year",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_004",
+      "section": "network_security",
+      "question_number": 34,
+      "text": "Security monitoring/SIEM?",
+      "type": "single_select",
+      "required": true,
+      "weight": 60,
+      "options": [
+        {
+          "value": "no",
+          "label": "No monitoring",
+          "points": 0,
+          "breach_data": "287 days avg detection time"
+        },
+        {
+          "value": "logs_only",
+          "label": "Logs collected, not monitored",
+          "points": 30
+        },
+        {
+          "value": "siem_basic",
+          "label": "SIEM with basic alerts",
+          "points": 70
+        },
+        {
+          "value": "siem_soc",
+          "label": "SIEM + 24/7 SOC",
+          "points": 100,
+          "breach_data": "21 days avg detection time"
+        }
+      ]
+    },
+    {
+      "id": "NET_005",
+      "section": "network_security",
+      "question_number": 35,
+      "text": "Intrusion Detection/Prevention (IDS/IPS)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "no",
+          "label": "No IDS/IPS",
+          "points": 0
+        },
+        {
+          "value": "ids",
+          "label": "IDS (detection only)",
+          "points": 50
+        },
+        {
+          "value": "ips",
+          "label": "IPS (prevention)",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_006",
+      "section": "network_security",
+      "question_number": 36,
+      "text": "VPN for remote access?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No VPN",
+          "points": 0
+        },
+        {
+          "value": "basic_vpn",
+          "label": "Basic VPN",
+          "points": 60
+        },
+        {
+          "value": "vpn_mfa",
+          "label": "VPN with MFA",
+          "points": 90
+        },
+        {
+          "value": "zero_trust",
+          "label": "Zero-trust ZTNA",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_007",
+      "section": "network_security",
+      "question_number": 37,
+      "text": "Wireless network security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no_wifi",
+          "label": "No wireless",
+          "points": 100
+        },
+        {
+          "value": "wpa2",
+          "label": "WPA2",
+          "points": 60
+        },
+        {
+          "value": "wpa3",
+          "label": "WPA3",
+          "points": 85
+        },
+        {
+          "value": "wpa3_certificate",
+          "label": "WPA3 + certificate auth",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_008",
+      "section": "network_security",
+      "question_number": 38,
+      "text": "DNS filtering/protection?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No DNS filtering",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic malware blocking",
+          "points": 60
+        },
+        {
+          "value": "advanced",
+          "label": "Advanced threat intelligence",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_009",
+      "section": "network_security",
+      "question_number": 39,
+      "text": "Network access control (NAC)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No NAC",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic (MAC filtering)",
+          "points": 40
+        },
+        {
+          "value": "802_1x",
+          "label": "802.1X authentication",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "NET_010",
+      "section": "network_security",
+      "question_number": 40,
+      "text": "DDoS protection?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No DDoS protection",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic ISP protection",
+          "points": 50
+        },
+        {
+          "value": "dedicated",
+          "label": "Dedicated DDoS service",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_001",
+      "section": "incident_response",
+      "question_number": 41,
+      "text": "Incident response plan?",
+      "type": "single_select",
+      "required": true,
+      "weight": 60,
+      "options": [
+        {
+          "value": "no",
+          "label": "No IR plan",
+          "points": 0
+        },
+        {
+          "value": "draft",
+          "label": "Draft, not tested",
+          "points": 30
+        },
+        {
+          "value": "tested_annually",
+          "label": "Tested annually",
+          "points": 75
+        },
+        {
+          "value": "tested_quarterly",
+          "label": "Tested quarterly",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_002",
+      "section": "incident_response",
+      "question_number": 42,
+      "text": "Security awareness training?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "none",
+          "label": "No training",
+          "points": 0,
+          "breach_data": "88% of breaches involve human error"
+        },
+        {
+          "value": "onboarding",
+          "label": "Onboarding only",
+          "points": 30
+        },
+        {
+          "value": "annual",
+          "label": "Annual training",
+          "points": 70
+        },
+        {
+          "value": "quarterly_phishing",
+          "label": "Quarterly + simulated phishing",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_003",
+      "section": "incident_response",
+      "question_number": 43,
+      "text": "Business continuity plan (BCP)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No BCP",
+          "points": 0
+        },
+        {
+          "value": "draft",
+          "label": "Draft, not tested",
+          "points": 40
+        },
+        {
+          "value": "tested",
+          "label": "Tested annually",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_004",
+      "section": "incident_response",
+      "question_number": 44,
+      "text": "Incident response team/roles defined?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No defined team",
+          "points": 0
+        },
+        {
+          "value": "defined",
+          "label": "Roles defined",
+          "points": 70
+        },
+        {
+          "value": "retainer",
+          "label": "Defined + external retainer",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_005",
+      "section": "incident_response",
+      "question_number": 45,
+      "text": "Crisis communication plan?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No plan",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic contact list",
+          "points": 50
+        },
+        {
+          "value": "comprehensive",
+          "label": "Full comms playbook",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_006",
+      "section": "incident_response",
+      "question_number": 46,
+      "text": "Forensic readiness (log retention)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no_logs",
+          "label": "No log retention",
+          "points": 0
+        },
+        {
+          "value": "30_days",
+          "label": "30 days",
+          "points": 40
+        },
+        {
+          "value": "90_days",
+          "label": "90 days",
+          "points": 75
+        },
+        {
+          "value": "1_year_plus",
+          "label": "1 year+",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_007",
+      "section": "incident_response",
+      "question_number": 47,
+      "text": "Cyber insurance in place?",
+      "type": "single_select",
+      "required": true,
+      "weight": 15,
+      "options": [
+        {
+          "value": "no",
+          "label": "No cyber insurance",
+          "points": 0
+        },
+        {
+          "value": "yes_basic",
+          "label": "Yes, basic coverage",
+          "points": 70
+        },
+        {
+          "value": "yes_comprehensive",
+          "label": "Yes, comprehensive",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_008",
+      "section": "incident_response",
+      "question_number": 48,
+      "text": "Post-incident review process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No formal process",
+          "points": 0
+        },
+        {
+          "value": "informal",
+          "label": "Informal lessons learned",
+          "points": 50
+        },
+        {
+          "value": "formal",
+          "label": "Formal root cause analysis",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_009",
+      "section": "incident_response",
+      "question_number": 49,
+      "text": "Tabletop exercises conducted?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "never",
+          "label": "Never",
+          "points": 0
+        },
+        {
+          "value": "once",
+          "label": "Once",
+          "points": 40
+        },
+        {
+          "value": "annually",
+          "label": "Annually",
+          "points": 80
+        },
+        {
+          "value": "biannually",
+          "label": "Twice yearly",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "IR_010",
+      "section": "incident_response",
+      "question_number": 50,
+      "text": "Out-of-band communication capability?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No backup comms",
+          "points": 0
+        },
+        {
+          "value": "phone_tree",
+          "label": "Phone tree",
+          "points": 70
+        },
+        {
+          "value": "dedicated",
+          "label": "Dedicated secure channel",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "COMP_001",
+      "section": "compliance",
+      "question_number": 51,
+      "text": "Security certifications held?",
+      "type": "multi_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "none",
+          "label": "No certifications",
+          "points": 0
+        },
+        {
+          "value": "cyber_essentials",
+          "label": "UK Cyber Essentials",
+          "points": 40
+        },
+        {
+          "value": "cyber_essentials_plus",
+          "label": "Cyber Essentials Plus",
+          "points": 60
+        },
+        {
+          "value": "iso_27001",
+          "label": "ISO 27001",
+          "points": 100
+        },
+        {
+          "value": "soc2",
+          "label": "SOC 2",
+          "points": 80
+        }
+      ]
+    },
+    {
+      "id": "COMP_002",
+      "section": "compliance",
+      "question_number": 52,
+      "text": "GDPR data inventory maintained?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No inventory",
+          "points": 0
+        },
+        {
+          "value": "partial",
+          "label": "Partial inventory",
+          "points": 50
+        },
+        {
+          "value": "complete",
+          "label": "Complete inventory",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "COMP_003",
+      "section": "compliance",
+      "question_number": 53,
+      "text": "Breach notification process (72hr)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No process",
+          "points": 0
+        },
+        {
+          "value": "documented",
+          "label": "Documented",
+          "points": 60
+        },
+        {
+          "value": "tested",
+          "label": "Documented + tested",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "COMP_004",
+      "section": "compliance",
+      "question_number": 54,
+      "text": "Security policies documented?",
+      "type": "single_select",
+      "required": true,
+      "weight": 15,
+      "options": [
+        {
+          "value": "no",
+          "label": "No policies",
+          "points": 0
+        },
+        {
+          "value": "documented",
+          "label": "Documented",
+          "points": 60
+        },
+        {
+          "value": "enforced",
+          "label": "Documented + enforced",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "COMP_005",
+      "section": "compliance",
+      "question_number": 55,
+      "text": "Regular compliance audits?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "never",
+          "label": "Never",
+          "points": 0
+        },
+        {
+          "value": "annually",
+          "label": "Annually",
+          "points": 80
+        },
+        {
+          "value": "biannually",
+          "label": "Twice yearly",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "THIRD_001",
+      "section": "third_party",
+      "question_number": 56,
+      "text": "Vendor risk assessment process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No vendor assessments",
+          "points": 0,
+          "breach_data": "29% of breaches via third parties"
+        },
+        {
+          "value": "critical_only",
+          "label": "Critical vendors only",
+          "points": 60
+        },
+        {
+          "value": "all_vendors",
+          "label": "All vendors assessed",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "THIRD_002",
+      "section": "third_party",
+      "question_number": 57,
+      "text": "Vendor contracts include security requirements?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No security clauses",
+          "points": 0
+        },
+        {
+          "value": "some",
+          "label": "Some contracts",
+          "points": 50
+        },
+        {
+          "value": "all",
+          "label": "All contracts",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "THIRD_003",
+      "section": "third_party",
+      "question_number": 58,
+      "text": "Ongoing vendor monitoring?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No monitoring",
+          "points": 0
+        },
+        {
+          "value": "annual_review",
+          "label": "Annual reviews",
+          "points": 70
+        },
+        {
+          "value": "continuous",
+          "label": "Continuous monitoring",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "THIRD_004",
+      "section": "third_party",
+      "question_number": 59,
+      "text": "Vendor access controls?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "broad_access",
+          "label": "Broad/unmonitored access",
+          "points": 0
+        },
+        {
+          "value": "limited",
+          "label": "Limited access, logged",
+          "points": 70
+        },
+        {
+          "value": "jit_pam",
+          "label": "Just-in-time, MFA, monitored",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "THIRD_005",
+      "section": "third_party",
+      "question_number": 60,
+      "text": "Vendor offboarding process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No formal process",
+          "points": 0
+        },
+        {
+          "value": "checklist",
+          "label": "Offboarding checklist",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_001",
+      "section": "cloud",
+      "question_number": 61,
+      "text": "Cloud infrastructure used?",
+      "type": "multi_select",
+      "required": true,
+      "weight": 0,
+      "options": [
+        {
+          "value": "none",
+          "label": "No cloud services",
+          "points": 0
+        },
+        {
+          "value": "aws",
+          "label": "AWS",
+          "points": 0
+        },
+        {
+          "value": "azure",
+          "label": "Azure",
+          "points": 0
+        },
+        {
+          "value": "gcp",
+          "label": "GCP",
+          "points": 0
+        },
+        {
+          "value": "saas",
+          "label": "SaaS applications",
+          "points": 0
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_002",
+      "section": "cloud",
+      "question_number": 62,
+      "text": "Cloud security posture management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No CSPM",
+          "points": 0
+        },
+        {
+          "value": "native_tools",
+          "label": "Native cloud tools",
+          "points": 70
+        },
+        {
+          "value": "dedicated_cspm",
+          "label": "Dedicated CSPM platform",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_003",
+      "section": "cloud",
+      "question_number": 63,
+      "text": "Cloud workload protection?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "no",
+          "label": "No workload protection",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic (native tools)",
+          "points": 60
+        },
+        {
+          "value": "cwpp",
+          "label": "CWPP solution",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_004",
+      "section": "cloud",
+      "question_number": 64,
+      "text": "Identity and Access Management (IAM)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "weak",
+          "label": "Weak/default IAM",
+          "points": 0
+        },
+        {
+          "value": "least_privilege",
+          "label": "Least privilege enforced",
+          "points": 80
+        },
+        {
+          "value": "jit_pam",
+          "label": "JIT + PAM + regular review",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_005",
+      "section": "cloud",
+      "question_number": 65,
+      "text": "Cloud data encryption?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No encryption",
+          "points": 0
+        },
+        {
+          "value": "provider_managed",
+          "label": "Provider-managed keys",
+          "points": 70
+        },
+        {
+          "value": "customer_managed",
+          "label": "Customer-managed keys",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_006",
+      "section": "cloud",
+      "question_number": 66,
+      "text": "Cloud configuration management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "manual",
+          "label": "Manual configuration",
+          "points": 0
+        },
+        {
+          "value": "iac",
+          "label": "Infrastructure as Code",
+          "points": 80
+        },
+        {
+          "value": "iac_scanned",
+          "label": "IaC + security scanning",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_007",
+      "section": "cloud",
+      "question_number": 67,
+      "text": "Cloud logging and monitoring?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "minimal",
+          "label": "Minimal/default logging",
+          "points": 0
+        },
+        {
+          "value": "comprehensive",
+          "label": "Comprehensive logging",
+          "points": 70
+        },
+        {
+          "value": "siem_integrated",
+          "label": "SIEM integrated + alerts",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_008",
+      "section": "cloud",
+      "question_number": 68,
+      "text": "Secrets management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 45,
+      "options": [
+        {
+          "value": "hardcoded",
+          "label": "Hardcoded/config files",
+          "points": 0
+        },
+        {
+          "value": "env_vars",
+          "label": "Environment variables",
+          "points": 40
+        },
+        {
+          "value": "secrets_manager",
+          "label": "Secrets manager (Vault/AWS/Azure)",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_009",
+      "section": "cloud",
+      "question_number": 69,
+      "text": "Container security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no_containers",
+          "label": "Not using containers",
+          "points": 100
+        },
+        {
+          "value": "no_scanning",
+          "label": "Containers, no scanning",
+          "points": 0
+        },
+        {
+          "value": "image_scanning",
+          "label": "Image scanning",
+          "points": 70
+        },
+        {
+          "value": "runtime_protection",
+          "label": "Runtime protection + scanning",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CLOUD_010",
+      "section": "cloud",
+      "question_number": 70,
+      "text": "Cloud backup and disaster recovery?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No cloud DR",
+          "points": 0
+        },
+        {
+          "value": "snapshots",
+          "label": "Snapshots/basic backup",
+          "points": 60
+        },
+        {
+          "value": "automated_dr",
+          "label": "Automated DR + tested",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "APP_001",
+      "section": "application",
+      "question_number": 71,
+      "text": "Secure development lifecycle (SDLC)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "no",
+          "label": "No secure SDLC",
+          "points": 0
+        },
+        {
+          "value": "guidelines",
+          "label": "Security guidelines",
+          "points": 50
+        },
+        {
+          "value": "enforced",
+          "label": "Enforced secure SDLC",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "APP_002",
+      "section": "application",
+      "question_number": 72,
+      "text": "Code security scanning (SAST/DAST)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 60,
+      "options": [
+        {
+          "value": "no",
+          "label": "No code scanning",
+          "points": 0
+        },
+        {
+          "value": "sast",
+          "label": "SAST only",
+          "points": 60
+        },
+        {
+          "value": "sast_dast",
+          "label": "SAST + DAST",
+          "points": 85
+        },
+        {
+          "value": "comprehensive",
+          "label": "SAST + DAST + SCA + secrets",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "APP_003",
+      "section": "application",
+      "question_number": 73,
+      "text": "Dependency/supply chain scanning?",
+      "type": "single_select",
+      "required": true,
+      "weight": 45,
+      "options": [
+        {
+          "value": "no",
+          "label": "No dependency scanning",
+          "points": 0
+        },
+        {
+          "value": "manual",
+          "label": "Manual reviews",
+          "points": 40
+        },
+        {
+          "value": "automated",
+          "label": "Automated SCA scanning",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "APP_004",
+      "section": "application",
+      "question_number": 74,
+      "text": "Code review process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No code reviews",
+          "points": 0
+        },
+        {
+          "value": "peer_review",
+          "label": "Peer reviews",
+          "points": 70
+        },
+        {
+          "value": "security_focused",
+          "label": "Security-focused reviews",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "APP_005",
+      "section": "application",
+      "question_number": 75,
+      "text": "API security testing?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "no",
+          "label": "No API testing",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic testing",
+          "points": 50
+        },
+        {
+          "value": "comprehensive",
+          "label": "Comprehensive API security testing",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "MOBILE_001",
+      "section": "mobile",
+      "question_number": 76,
+      "text": "Mobile device management (MDM)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "options": [
+        {
+          "value": "no",
+          "label": "No MDM",
+          "points": 0
+        },
+        {
+          "value": "byod_policy",
+          "label": "BYOD policy only",
+          "points": 30
+        },
+        {
+          "value": "mdm",
+          "label": "MDM deployed",
+          "points": 80
+        },
+        {
+          "value": "emm",
+          "label": "Full EMM solution",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "MOBILE_002",
+      "section": "mobile",
+      "question_number": 77,
+      "text": "Mobile app security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no_apps",
+          "label": "No mobile apps",
+          "points": 100
+        },
+        {
+          "value": "no_testing",
+          "label": "Apps, no security testing",
+          "points": 0
+        },
+        {
+          "value": "tested",
+          "label": "Security tested",
+          "points": 80
+        },
+        {
+          "value": "certified",
+          "label": "OWASP MASVS certified",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "MOBILE_003",
+      "section": "mobile",
+      "question_number": 78,
+      "text": "Remote wipe capability?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No remote wipe",
+          "points": 0
+        },
+        {
+          "value": "yes",
+          "label": "Remote wipe enabled",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PHYSICAL_001",
+      "section": "physical",
+      "question_number": 79,
+      "text": "Physical access controls?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "none",
+          "label": "No access controls",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic (keys/locks)",
+          "points": 50
+        },
+        {
+          "value": "card_access",
+          "label": "Card/badge access",
+          "points": 85
+        },
+        {
+          "value": "biometric",
+          "label": "Biometric + monitoring",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PHYSICAL_002",
+      "section": "physical",
+      "question_number": 80,
+      "text": "Visitor management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No visitor controls",
+          "points": 0
+        },
+        {
+          "value": "sign_in",
+          "label": "Sign-in sheet",
+          "points": 50
+        },
+        {
+          "value": "escorted",
+          "label": "Escorted + badges",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PHYSICAL_003",
+      "section": "physical",
+      "question_number": 81,
+      "text": "Server room/data center security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "cloud_only",
+          "label": "Cloud only (no on-prem)",
+          "points": 100
+        },
+        {
+          "value": "basic",
+          "label": "Basic locked room",
+          "points": 40
+        },
+        {
+          "value": "restricted",
+          "label": "Restricted access + monitoring",
+          "points": 80
+        },
+        {
+          "value": "tier3",
+          "label": "Tier 3+ data center",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PHYSICAL_004",
+      "section": "physical",
+      "question_number": 82,
+      "text": "Clean desk policy?",
+      "type": "single_select",
+      "required": true,
+      "weight": 15,
+      "options": [
+        {
+          "value": "no",
+          "label": "No policy",
+          "points": 0
+        },
+        {
+          "value": "policy",
+          "label": "Policy exists",
+          "points": 60
+        },
+        {
+          "value": "enforced",
+          "label": "Enforced policy",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PREV_001",
+      "section": "history",
+      "question_number": 83,
+      "text": "Previous security incidents (3 years)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 0,
+      "risk_impact": "probability_multiplier",
+      "options": [
+        {
+          "value": "no",
+          "label": "No incidents",
+          "points": 0,
+          "multiplier": 1.0
+        },
+        {
+          "value": "minor",
+          "label": "Minor incident (contained quickly)",
+          "points": 0,
+          "multiplier": 1.5
+        },
+        {
+          "value": "moderate",
+          "label": "Moderate (some data exposure)",
+          "points": 0,
+          "multiplier": 2.0
+        },
+        {
+          "value": "major",
+          "label": "Major breach/ransomware",
+          "points": 0,
+          "multiplier": 2.3,
+          "breach_data": "2.3x more likely to be attacked again"
+        }
+      ],
+      "conditional_next": {
+        "if": ["minor", "moderate", "major"],
+        "show": ["PREV_002"]
+      }
+    },
+    {
+      "id": "PREV_002",
+      "section": "history",
+      "question_number": 84,
+      "text": "Improvements made after incident?",
+      "type": "single_select",
+      "required": true,
+      "weight": 50,
+      "conditional_on": {
+        "PREV_001": ["minor", "moderate", "major"]
+      },
+      "options": [
+        {
+          "value": "no",
+          "label": "No improvements",
+          "points": 0
+        },
+        {
+          "value": "some",
+          "label": "Some improvements",
+          "points": 60
+        },
+        {
+          "value": "comprehensive",
+          "label": "Comprehensive overhaul",
+          "points": 100,
+          "breach_data": "75% reduction in repeat incidents"
+        }
+      ]
+    },
+    {
+      "id": "EMAIL_001",
+      "section": "email",
+      "question_number": 85,
+      "text": "Email authentication (SPF/DKIM/DMARC)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "none",
+          "label": "None configured",
+          "points": 0
+        },
+        {
+          "value": "spf_dkim",
+          "label": "SPF + DKIM",
+          "points": 60
+        },
+        {
+          "value": "full_dmarc",
+          "label": "SPF + DKIM + DMARC p=reject",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "EMAIL_002",
+      "section": "email",
+      "question_number": 86,
+      "text": "Email encryption?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No encryption",
+          "points": 0
+        },
+        {
+          "value": "tls",
+          "label": "TLS in transit",
+          "points": 70
+        },
+        {
+          "value": "e2e",
+          "label": "End-to-end encryption available",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_011",
+      "section": "data_protection",
+      "question_number": 87,
+      "text": "Data retention policy?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No policy",
+          "points": 0
+        },
+        {
+          "value": "documented",
+          "label": "Documented",
+          "points": 70
+        },
+        {
+          "value": "automated",
+          "label": "Automated enforcement",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "DATA_012",
+      "section": "data_protection",
+      "question_number": 88,
+      "text": "Data disposal procedures?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No formal procedure",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Delete files",
+          "points": 40
+        },
+        {
+          "value": "secure",
+          "label": "Secure wipe/shredding",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CHANGE_001",
+      "section": "change_management",
+      "question_number": 89,
+      "text": "Change management process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No formal process",
+          "points": 0
+        },
+        {
+          "value": "informal",
+          "label": "Informal approvals",
+          "points": 50
+        },
+        {
+          "value": "formal",
+          "label": "Formal CAB process",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CHANGE_002",
+      "section": "change_management",
+      "question_number": 90,
+      "text": "Rollback procedures?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No rollback plan",
+          "points": 0
+        },
+        {
+          "value": "documented",
+          "label": "Documented",
+          "points": 70
+        },
+        {
+          "value": "tested",
+          "label": "Tested regularly",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "ASSET_001",
+      "section": "asset_management",
+      "question_number": 91,
+      "text": "IT asset inventory maintained?",
+      "type": "single_select",
+      "required": true,
+      "weight": 30,
+      "options": [
+        {
+          "value": "no",
+          "label": "No inventory",
+          "points": 0
+        },
+        {
+          "value": "manual",
+          "label": "Manual spreadsheet",
+          "points": 50
+        },
+        {
+          "value": "automated",
+          "label": "Automated asset management",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "ASSET_002",
+      "section": "asset_management",
+      "question_number": 92,
+      "text": "Software license management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No tracking",
+          "points": 0
+        },
+        {
+          "value": "manual",
+          "label": "Manual tracking",
+          "points": 60
+        },
+        {
+          "value": "automated",
+          "label": "Automated SAM tool",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "ASSET_003",
+      "section": "asset_management",
+      "question_number": 93,
+      "text": "Hardware disposal process?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "No secure disposal",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic data deletion",
+          "points": 50
+        },
+        {
+          "value": "certified",
+          "label": "Certified secure destruction",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "AUTH_001",
+      "section": "authentication",
+      "question_number": 94,
+      "text": "Single Sign-On (SSO) deployed?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No SSO",
+          "points": 0
+        },
+        {
+          "value": "partial",
+          "label": "SSO for some apps",
+          "points": 60
+        },
+        {
+          "value": "comprehensive",
+          "label": "SSO for all apps",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "AUTH_002",
+      "section": "authentication",
+      "question_number": 95,
+      "text": "Session management controls?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "weak",
+          "label": "No timeouts/controls",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic timeouts",
+          "points": 60
+        },
+        {
+          "value": "advanced",
+          "label": "Adaptive/context-aware",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "VULN_001",
+      "section": "vulnerability",
+      "question_number": 96,
+      "text": "Vulnerability disclosure program?",
+      "type": "single_select",
+      "required": true,
+      "weight": 20,
+      "options": [
+        {
+          "value": "no",
+          "label": "No program",
+          "points": 0
+        },
+        {
+          "value": "email",
+          "label": "Security email contact",
+          "points": 60
+        },
+        {
+          "value": "bug_bounty",
+          "label": "Public bug bounty",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "VULN_002",
+      "section": "vulnerability",
+      "question_number": 97,
+      "text": "Patch SLA for critical vulnerabilities?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no_sla",
+          "label": "No SLA",
+          "points": 0
+        },
+        {
+          "value": "30_days",
+          "label": "30 days",
+          "points": 50
+        },
+        {
+          "value": "7_days",
+          "label": "7 days",
+          "points": 85
+        },
+        {
+          "value": "48_hours",
+          "label": "48 hours",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "CRYPTO_001",
+      "section": "cryptography",
+      "question_number": 98,
+      "text": "Cryptographic key management?",
+      "type": "single_select",
+      "required": true,
+      "weight": 35,
+      "options": [
+        {
+          "value": "no",
+          "label": "No key management",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic (config files)",
+          "points": 30
+        },
+        {
+          "value": "kms",
+          "label": "Dedicated KMS",
+          "points": 80
+        },
+        {
+          "value": "hsm",
+          "label": "Hardware HSM",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "PRIVACY_001",
+      "section": "privacy",
+      "question_number": 99,
+      "text": "Privacy impact assessments (PIA/DPIA)?",
+      "type": "single_select",
+      "required": true,
+      "weight": 25,
+      "options": [
+        {
+          "value": "no",
+          "label": "Never conducted",
+          "points": 0
+        },
+        {
+          "value": "high_risk",
+          "label": "For high-risk projects",
+          "points": 70
+        },
+        {
+          "value": "all_projects",
+          "label": "All new projects",
+          "points": 100
+        }
+      ]
+    },
+    {
+      "id": "SUPPLY_001",
+      "section": "supply_chain",
+      "question_number": 100,
+      "text": "Software supply chain security?",
+      "type": "single_select",
+      "required": true,
+      "weight": 40,
+      "options": [
+        {
+          "value": "no",
+          "label": "No controls",
+          "points": 0
+        },
+        {
+          "value": "basic",
+          "label": "Basic vetting",
+          "points": 50
+        },
+        {
+          "value": "sbom",
+          "label": "SBOM + signature verification",
+          "points": 100
+        }
+      ]
+    }
+  ]
+}

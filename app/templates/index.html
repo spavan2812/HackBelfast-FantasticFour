@@ -25,11 +25,44 @@
             <a class="navbar-brand" href="#">FlaskApp</a>
         </div>
     </nav>
-    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
-            <h1 class="mb-3 text-center">Welcome!</h1>
-            <p class="text-center">This is a simpl landin page built with Flask, Bootstrap, and jQuery.</p>
-            <button id="helloBtn" class="btn btn-primary w-100 mt-3">Click Me</button>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <!-- Welcome card -->
+                <div class="card shadow p-4 mb-4 text-center">
+                    <h1 class="mb-2">Welcome!</h1>
+                    <p class="text-muted mb-3">This is a simple landing page built with Flask, Bootstrap, and jQuery.</p>
+                    <button id="helloBtn" class="btn btn-primary w-100">Click Me</button>
+                </div>
+
+                <!-- Chat card -->
+                <div class="card shadow p-4">
+                    <h5 class="mb-3">Ask the AI</h5>
+
+                    <div class="mb-3">
+                        <label for="modelSelect" class="form-label">Model</label>
+                        <select id="modelSelect" class="form-select">
+                            <option disabled selected>Loading models…</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="promptInput" class="form-label">Prompt</label>
+                        <textarea id="promptInput" class="form-control" rows="3"
+                                  placeholder="Ask anything…"></textarea>
+                    </div>
+
+                    <button id="sendBtn" class="btn btn-primary w-100 mb-3">
+                        <span id="sendLabel">Send</span>
+                        <span id="sendSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status"></span>
+                    </button>
+
+                    <div id="responseBox" class="border rounded p-3 bg-white d-none"
+                         style="min-height:80px; white-space:pre-wrap; font-size:.9rem;"></div>
+                </div>
+
+            </div>
         </div>
     </div>
     <!-- jQuery -->
@@ -44,6 +77,75 @@
         $(function() {
             $('#helloBtn').click(function() {
                 alert('Hello from Flask, Bootstrap, and jQuery!');
+            });
+
+            // Load available models
+            $.getJSON('/api/models', function(models) {
+                const $sel = $('#modelSelect').empty();
+                models.forEach(function(m, i) {
+                    $sel.append($('<option>', { value: m, text: m, selected: i === 0 }));
+                });
+            }).fail(function() {
+                $('#modelSelect').html('<option disabled>Failed to load models</option>');
+            });
+
+            // Send prompt and stream response
+            $('#sendBtn').click(function() {
+                const prompt = $('#promptInput').val().trim();
+                if (!prompt) return;
+
+                const model = $('#modelSelect').val();
+                const $box = $('#responseBox').removeClass('d-none').text('');
+                $('#sendBtn').prop('disabled', true);
+                $('#sendSpinner').removeClass('d-none');
+
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model, prompt })
+                }).then(function(res) {
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = '';
+
+                    function read() {
+                        reader.read().then(function({ done, value }) {
+                            if (done) { finish(); return; }
+                            buffer += decoder.decode(value, { stream: true });
+                            const lines = buffer.split('\n');
+                            buffer = lines.pop();
+                            lines.forEach(function(line) {
+                                if (!line.startsWith('data:')) return;
+                                try {
+                                    const chunk = JSON.parse(line.slice(5).trim());
+                                    if (chunk.error) {
+                                        $box.text('Error: ' + chunk.error);
+                                    } else {
+                                        $box.text($box.text() + (chunk.response || ''));
+                                    }
+                                    if (chunk.done) { finish(); return; }
+                                } catch (_) {}
+                            });
+                            read();
+                        });
+                    }
+
+                    function finish() {
+                        $('#sendBtn').prop('disabled', false);
+                        $('#sendSpinner').addClass('d-none');
+                    }
+
+                    read();
+                }).catch(function(err) {
+                    $box.text('Request failed: ' + err.message);
+                    $('#sendBtn').prop('disabled', false);
+                    $('#sendSpinner').addClass('d-none');
+                });
+            });
+
+            // Allow Ctrl+Enter to submit
+            $('#promptInput').keydown(function(e) {
+                if (e.ctrlKey && e.key === 'Enter') $('#sendBtn').click();
             });
         });
 
