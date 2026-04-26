@@ -1,0 +1,51 @@
+services:
+
+  # ── Ollama LLM service ──────────────────────────────────────────────────────
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama   # models persist across rebuilds
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/tags || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  # ── One-shot model pull (runs once, skipped if model already cached) ────────
+  ollama-init:
+    image: ollama/ollama
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: ["ollama", "pull", "llama3:latest"]
+    restart: "no"
+
+  # ── CyberPath Flask application ─────────────────────────────────────────────
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      # Email (optional — omit to run in demo/log mode)
+      - MAIL_HOST=${MAIL_HOST:-}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_USER=${MAIL_USER:-}
+      - MAIL_PASS=${MAIL_PASS:-}
+      - MAIL_FROM=${MAIL_FROM:-noreply@cyberpath.io}
+    volumes:
+      - uploads:/app/app/static/uploads  # uploaded proof files persist
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
+  uploads:

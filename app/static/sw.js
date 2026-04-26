@@ -1,11 +1,7 @@
-const CACHE = 'flaskapp-v1';
+const CACHE = 'cyberpath-v2';
 const SHELL = [
-  '/',
   '/static/manifest.json',
   '/static/icons/icon.svg',
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
-  'https://code.jquery.com/jquery-3.7.1.min.js',
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
 ];
 
 self.addEventListener('install', event => {
@@ -26,6 +22,8 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  // Never cache the main HTML page — always serve fresh from server
+  if (event.request.mode === 'navigate') return;
   event.respondWith(
     caches.match(event.request).then(cached => {
       const network = fetch(event.request).then(response => {
