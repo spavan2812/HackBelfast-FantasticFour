@@ -1,4 +1,4 @@
-# CyberPath Belfast
+# CyberPath
 
 **AI-powered cyber insurance risk assessment for Belfast SMEs.**
 Adaptive questionnaire driven by a local Ollama LLM → instant risk score → locked report unlocked via lead capture.
